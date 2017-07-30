@@ -32,6 +32,26 @@ public class NetworkUtils {
     }
 
 
+    public static URL fetchSongUrl(String id){
+        String jsonResponse = null;
+        try {
+            jsonResponse = makeHttpRequestSong(id);
+            JSONObject jsonObject = new JSONObject(jsonResponse);
+            JSONArray data = jsonObject.getJSONArray("data");
+            JSONObject songDetail = data.getJSONObject(0);
+            String url = String.valueOf(songDetail.get("url"));
+            URL urlString = new URL(url);
+            return urlString;
+        } catch (IOException e) {
+            Log.e(LOG_TAG, "Error with closing input stream", e);
+        } catch (JSONException e) {
+            Log.e("QueryUtils", "Problem parsing the song JSON results", e);
+        } finally {
+            return null;
+        }
+
+    }
+
     public static List<Artist> fetchTopArtistsData(){
         String jsonResponse = null;
         try {
@@ -75,7 +95,7 @@ public class NetworkUtils {
                 artistList.add(new Artist(name, id, albumSize, imgUrl));
             }
         } catch (JSONException e) {
-            Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
+            Log.e("QueryUtils", "Problem parsing the artist detail JSON results", e);
         }
         return artistList;
     }
@@ -112,7 +132,7 @@ public class NetworkUtils {
             }
             artist.setSongsList(hotSongsList);
         } catch (JSONException e) {
-            Log.e("QueryUtils", "Problem parsing the earthquake JSON results", e);
+            Log.e("QueryUtils", "Problem parsing the artist JSON results", e);
         }
         return artist;
     }
@@ -124,6 +144,11 @@ public class NetworkUtils {
 
     private static String makeHttpRequstTopArtist() throws IOException{
         URL urlString = new URL(BASE_URL + "top/artists");
+        return makeHttpRequest(urlString);
+    }
+
+    private static String makeHttpRequestSong(String id) throws IOException{
+        URL urlString = new URL(BASE_URL + "music/url?id=" + id);
         return makeHttpRequest(urlString);
     }
 

@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,6 +27,7 @@ public class ArtistDetailsActivity extends AppCompatActivity implements LoaderMa
 
     private TextView artistName;
     private TextView artistDetails;
+    private Button btShowmore;
     private ImageView imageView;
     private SongsAdapter songsAdapter;
     private RecyclerView mRecyclerView;
@@ -35,11 +38,29 @@ public class ArtistDetailsActivity extends AppCompatActivity implements LoaderMa
         setContentView(R.layout.artist_details);
         artistName = (TextView) findViewById(R.id.artist_name);
         artistDetails = (TextView) findViewById(R.id.artist_desc);
+        btShowmore = (Button) findViewById(R.id.btShowmore);
         imageView = (ImageView) findViewById(R.id.artist_new_pic);
         songsAdapter = new SongsAdapter(this, new ArrayList<Songs>());
         mRecyclerView = (RecyclerView) findViewById(R.id.songs_recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setAdapter(songsAdapter);
+
+
+        btShowmore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (btShowmore.getText().toString().equalsIgnoreCase("Showmore..."))
+                {
+                    artistDetails.setMaxLines(Integer.MAX_VALUE);//your TextView
+                    btShowmore.setText("Showless");
+                }
+                else
+                {
+                    artistDetails.setMaxLines(2);//your TextView
+                    btShowmore.setText("Showmore...");
+                }
+            }
+        });
 
         ConnectivityManager connMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
@@ -52,8 +73,8 @@ public class ArtistDetailsActivity extends AppCompatActivity implements LoaderMa
 
     @Override
     public Loader<Artist> onCreateLoader(int i, Bundle bundle) {
-        Log.i("TEST", getIntent().getStringExtra("songId"));
-        return new ArtistDetailsLoader(this, getIntent().getStringExtra("songId"));
+        Log.i("TEST", getIntent().getStringExtra("artistId"));
+        return new ArtistDetailsLoader(this, getIntent().getStringExtra("artistId"));
     }
 
     @Override

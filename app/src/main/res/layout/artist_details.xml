@@ -12,7 +12,27 @@
     <TextView
         android:id="@+id/artist_desc"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:maxLines="2" />
+
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btShowmore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="Showmore..."
+            android:textAllCaps="false"
+            android:textColor="@android:color/holo_blue_light"
+            android:background="@android:color/transparent"
+            />
+
+    </RelativeLayout>
+
 
     <ImageView
         android:id="@+id/artist_new_pic"

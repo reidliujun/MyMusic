@@ -11,7 +11,6 @@ public class Songs {
     private String albumUrl;
 
 
-
     public Songs(String name, String id) {
         this.name = name;
         this.id = id;

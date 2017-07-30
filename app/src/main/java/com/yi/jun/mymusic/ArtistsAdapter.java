@@ -49,12 +49,12 @@ public class ArtistsAdapter extends RecyclerView.Adapter<ArtistsAdapter.ViewHold
         artistName.setText(artist.getName());
         Picasso.with(context).load(artist.getImageUrl()).into(imageView);
 
-        cardView.setOnClickListener(new View.OnClickListener(){
+        cardView.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ArtistDetailsActivity.class);
-                intent.putExtra("songId", artist.getId());
+                intent.putExtra("artistId", artist.getId());
                 context.startActivity(intent);
             }
         });
